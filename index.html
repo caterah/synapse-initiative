@@ -144,11 +144,17 @@
         }
         
         /* Conavai Chat Widget Styles */
-        .conavai-widget {
+        .conavai-section {
             margin-top: 40px;
+            text-align: center;
+        }
+        
+        .conavai-widget {
             border: 1px solid #2d3748;
             border-radius: 10px;
             overflow: hidden;
+            margin: 20px auto;
+            max-width: 800px;
         }
         
         .widget-header {
@@ -161,6 +167,30 @@
         .widget-container {
             height: 500px;
             background: #1a202c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .loading-message {
+            color: #a0aec0;
+            font-size: 1.1rem;
+        }
+        
+        .widget-fallback {
+            padding: 20px;
+            text-align: center;
+            color: #a0aec0;
+        }
+        
+        .widget-fallback a {
+            color: #4cc9f0;
+            text-decoration: none;
+        }
+        
+        .widget-fallback a:hover {
+            text-decoration: underline;
         }
         
         .how-it-works {
@@ -422,12 +452,22 @@
                 <p>KAI's unique ability to identify profound analogies across disciplines makes him an invaluable partner for researchers, innovators, and strategists seeking novel solutions to complex problems.</p>
                 
                 <!-- Conavai Chat Widget -->
-                <div class="conavai-widget">
-                    <div class="widget-header">
-                        💬 Chat with KAI - Your AI Innovation Partner
-                    </div>
-                    <div class="widget-container" id="conavai-widget">
-                        <!-- Conavai widget will be loaded here -->
+                <div class="conavai-section">
+                    <h3 style="color: #4cc9f0; margin-bottom: 20px;">Chat with KAI - Your AI Innovation Partner</h3>
+                    <div class="conavai-widget">
+                        <div class="widget-header">
+                            💬 Live Chat with KAI
+                        </div>
+                        <div class="widget-container" id="conavai-widget">
+                            <div class="loading-message" id="loading-message">
+                                Loading KAI conversation interface...
+                            </div>
+                            <div class="widget-fallback" id="widget-fallback" style="display: none;">
+                                <p>If the chat doesn't load, you can:</p>
+                                <p><a href="https://studio.convai.com/character/b6ed5409-8a31-4fcc-acd1-e9950a689db9" target="_blank">Chat with KAI on Conavai Studio</a></p>
+                                <p>Or try refreshing the page.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -518,26 +558,58 @@
         </div>
     </footer>
 
-    <!-- Conavai Script -->
+    <!-- Conavai Script - Alternative Implementation -->
     <script>
-        // Load Conavai widget
-        (function() {
-            var script = document.createElement('script');
+        // Enhanced Conavai widget loading with error handling
+        function loadConvaiWidget() {
+            const script = document.createElement('script');
             script.src = 'https://cdn.convai.com/convai-web-sdk/v2/convai-web-sdk.js';
             script.onload = function() {
-                if (typeof initConvai !== 'undefined') {
-                    initConvai({
-                        characterId: 'b6ed5409-8a31-4fcc-acd1-e9950a689db9',
-                        container: document.getElementById('conavai-widget'),
-                        mode: 'popup', // or 'inline'
-                        height: '500px',
-                        width: '100%',
-                        theme: 'dark'
-                    });
+                console.log('Conavai SDK loaded successfully');
+                try {
+                    if (typeof initConvai === 'function') {
+                        initConvai({
+                            characterId: 'b6ed5409-8a31-4fcc-acd1-e9950a689db9',
+                            container: document.getElementById('conavai-widget'),
+                            mode: 'inline',
+                            height: '500px',
+                            width: '100%',
+                            theme: 'dark'
+                        });
+                        document.getElementById('loading-message').style.display = 'none';
+                    } else {
+                        throw new Error('initConvai function not found');
+                    }
+                } catch (error) {
+                    console.error('Error initializing Conavai:', error);
+                    showFallback();
                 }
             };
+            script.onerror = function() {
+                console.error('Failed to load Conavai SDK');
+                showFallback();
+            };
             document.head.appendChild(script);
-        })();
+            
+            // Fallback if widget doesn't load within 10 seconds
+            setTimeout(function() {
+                if (document.getElementById('loading-message').style.display !== 'none') {
+                    showFallback();
+                }
+            }, 10000);
+        }
+
+        function showFallback() {
+            document.getElementById('loading-message').style.display = 'none';
+            document.getElementById('widget-fallback').style.display = 'block';
+        }
+
+        // Load the widget when the page is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadConvaiWidget);
+        } else {
+            loadConvaiWidget();
+        }
 
         // Form submission handling
         document.getElementById('access-form').addEventListener('submit', function(e) {
