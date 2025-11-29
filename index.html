@@ -79,11 +79,16 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            margin: 10px;
         }
         
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .cta-button.secondary {
+            background: linear-gradient(90deg, #f72585, #b5179e);
         }
         
         .kai-section {
@@ -136,6 +141,26 @@
             top: -10px;
             left: 10px;
             opacity: 0.3;
+        }
+        
+        /* Conavai Chat Widget Styles */
+        .conavai-widget {
+            margin-top: 40px;
+            border: 1px solid #2d3748;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .widget-header {
+            background: linear-gradient(90deg, #4361ee, #3a0ca3);
+            padding: 15px 20px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .widget-container {
+            height: 500px;
+            background: #1a202c;
         }
         
         .how-it-works {
@@ -375,10 +400,11 @@
             <h1>Break Through Knowledge Silos</h1>
             <p>Connect disparate fields of knowledge to solve your most complex challenges with AI-powered conceptual synthesis.</p>
             <a href="#cta" class="cta-button">Request Early Access</a>
+            <a href="#chat-with-kai" class="cta-button secondary">Chat with KAI Live</a>
         </div>
     </section>
 
-    <section class="kai-section">
+    <section class="kai-section" id="chat-with-kai">
         <div class="container kai-container">
             <div class="kai-avatar">
                 <div class="avatar-placeholder">
@@ -394,6 +420,16 @@
                 </div>
                 
                 <p>KAI's unique ability to identify profound analogies across disciplines makes him an invaluable partner for researchers, innovators, and strategists seeking novel solutions to complex problems.</p>
+                
+                <!-- Conavai Chat Widget -->
+                <div class="conavai-widget">
+                    <div class="widget-header">
+                        💬 Chat with KAI - Your AI Innovation Partner
+                    </div>
+                    <div class="widget-container" id="conavai-widget">
+                        <!-- Conavai widget will be loaded here -->
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -482,7 +518,28 @@
         </div>
     </footer>
 
+    <!-- Conavai Script -->
     <script>
+        // Load Conavai widget
+        (function() {
+            var script = document.createElement('script');
+            script.src = 'https://cdn.convai.com/convai-web-sdk/v2/convai-web-sdk.js';
+            script.onload = function() {
+                if (typeof initConvai !== 'undefined') {
+                    initConvai({
+                        characterId: 'b6ed5409-8a31-4fcc-acd1-e9950a689db9',
+                        container: document.getElementById('conavai-widget'),
+                        mode: 'popup', // or 'inline'
+                        height: '500px',
+                        width: '100%',
+                        theme: 'dark'
+                    });
+                }
+            };
+            document.head.appendChild(script);
+        })();
+
+        // Form submission handling
         document.getElementById('access-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
