@@ -107,12 +107,6 @@
             text-align: center;
         }
         
-        .kai-avatar img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
         .kai-intro {
             flex: 2;
         }
@@ -143,13 +137,13 @@
             opacity: 0.3;
         }
         
-        /* Conavai Chat Widget Styles */
-        .conavai-section {
+        /* Chat Interface Styles */
+        .chat-section {
             margin-top: 40px;
             text-align: center;
         }
         
-        .conavai-widget {
+        .chat-widget {
             border: 1px solid #2d3748;
             border-radius: 10px;
             overflow: hidden;
@@ -164,33 +158,98 @@
             font-weight: 600;
         }
         
-        .widget-container {
+        .chat-container {
             height: 500px;
             background: #1a202c;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            flex-direction: column;
         }
         
-        .loading-message {
-            color: #a0aec0;
-            font-size: 1.1rem;
-        }
-        
-        .widget-fallback {
+        .chat-messages {
+            flex: 1;
             padding: 20px;
-            text-align: center;
-            color: #a0aec0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .widget-fallback a {
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+        
+        .message.ai {
+            align-self: flex-start;
+            background: #2d3748;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            background: #4361ee;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #2d3748;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid #2d3748;
+            border-radius: 25px;
+            color: #e2e8f0;
+            font-size: 1rem;
+        }
+        
+        .chat-input:focus {
+            outline: none;
+            border-color: #4361ee;
+        }
+        
+        .send-button {
+            background: #4361ee;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .send-button:hover {
+            background: #3a0ca3;
+        }
+        
+        .fallback-options {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 10px;
+        }
+        
+        .fallback-options h4 {
             color: #4cc9f0;
-            text-decoration: none;
+            margin-bottom: 15px;
         }
         
-        .widget-fallback a:hover {
-            text-decoration: underline;
+        .fallback-link {
+            display: inline-block;
+            background: linear-gradient(90deg, #f72585, #b5179e);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin: 5px;
+            font-weight: 600;
         }
         
         .how-it-works {
@@ -451,29 +510,45 @@
                 
                 <p>KAI's unique ability to identify profound analogies across disciplines makes him an invaluable partner for researchers, innovators, and strategists seeking novel solutions to complex problems.</p>
                 
-                <!-- Conavai Chat Widget -->
-                <div class="conavai-section">
+                <!-- Custom Chat Interface -->
+                <div class="chat-section">
                     <h3 style="color: #4cc9f0; margin-bottom: 20px;">Chat with KAI - Your AI Innovation Partner</h3>
-                    <div class="conavai-widget">
+                    <div class="chat-widget">
                         <div class="widget-header">
                             💬 Live Chat with KAI
                         </div>
-                        <div class="widget-container" id="conavai-widget">
-                            <div class="loading-message" id="loading-message">
-                                Loading KAI conversation interface...
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chat-messages">
+                                <div class="message ai">
+                                    Hello! I'm KAI, your Knowledge Amplification Interface. I'm here to help you find unexpected connections between different fields of knowledge. What challenge are you working on today?
+                                </div>
                             </div>
-                            <div class="widget-fallback" id="widget-fallback" style="display: none;">
-                                <p>If the chat doesn't load, you can:</p>
-                                <p><a href="https://studio.convai.com/character/b6ed5409-8a31-4fcc-acd1-e9950a689db9" target="_blank">Chat with KAI on Conavai Studio</a></p>
-                                <p>Or try refreshing the page.</p>
+                            <div class="chat-input-container">
+                                <input type="text" class="chat-input" id="chat-input" placeholder="Ask KAI about your challenge...">
+                                <button class="send-button" id="send-button">Send</button>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- Fallback Options -->
+                    <div class="fallback-options">
+                        <h4>Alternative Ways to Connect with KAI</h4>
+                        <a href="https://studio.convai.com/character/b6ed5409-8a31-4fcc-acd1-e9950a689db9" target="_blank" class="fallback-link">
+                            Chat on Conavai Studio
+                        </a>
+                        <a href="#cta" class="fallback-link">
+                            Request Full Access
+                        </a>
+                        <p style="margin-top: 15px; color: #a0aec0; font-size: 0.9rem;">
+                            Note: The full AI experience requires backend integration. Use the links above for direct access.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Rest of the sections remain the same -->
     <section class="how-it-works">
         <div class="container">
             <h2 class="section-title">How It Works: From Silos to Synthesis</h2>
@@ -558,57 +633,54 @@
         </div>
     </footer>
 
-    <!-- Conavai Script - Alternative Implementation -->
     <script>
-        // Enhanced Conavai widget loading with error handling
-        function loadConvaiWidget() {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.convai.com/convai-web-sdk/v2/convai-web-sdk.js';
-            script.onload = function() {
-                console.log('Conavai SDK loaded successfully');
-                try {
-                    if (typeof initConvai === 'function') {
-                        initConvai({
-                            characterId: 'b6ed5409-8a31-4fcc-acd1-e9950a689db9',
-                            container: document.getElementById('conavai-widget'),
-                            mode: 'inline',
-                            height: '500px',
-                            width: '100%',
-                            theme: 'dark'
-                        });
-                        document.getElementById('loading-message').style.display = 'none';
-                    } else {
-                        throw new Error('initConvai function not found');
-                    }
-                } catch (error) {
-                    console.error('Error initializing Conavai:', error);
-                    showFallback();
-                }
-            };
-            script.onerror = function() {
-                console.error('Failed to load Conavai SDK');
-                showFallback();
-            };
-            document.head.appendChild(script);
+        // Simple chat interface with predefined responses
+        document.getElementById('send-button').addEventListener('click', sendMessage);
+        document.getElementById('chat-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
             
-            // Fallback if widget doesn't load within 10 seconds
-            setTimeout(function() {
-                if (document.getElementById('loading-message').style.display !== 'none') {
-                    showFallback();
-                }
-            }, 10000);
+            if (message) {
+                // Add user message
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const response = getAIResponse(message);
+                    addMessage(response, 'ai');
+                }, 1000);
+            }
         }
 
-        function showFallback() {
-            document.getElementById('loading-message').style.display = 'none';
-            document.getElementById('widget-fallback').style.display = 'block';
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Load the widget when the page is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadConvaiWidget);
-        } else {
-            loadConvaiWidget();
+        function getAIResponse(userMessage) {
+            const responses = [
+                "That's a fascinating challenge! Let me connect that to some unexpected domains. Have you considered how nature solves similar problems?",
+                "I see an interesting parallel here with historical innovations. The solution might lie in combining principles from different eras.",
+                "Your question reminds me of a concept in quantum physics that could be metaphorically applied to your situation.",
+                "Let me synthesize that with some principles from architectural design and biological systems.",
+                "That's a complex problem! I'm drawing connections to distributed systems in computer science and ecological networks.",
+                "I'm analyzing your challenge through multiple lenses: systems theory, behavioral economics, and maybe even some principles from music composition.",
+                "The pattern in your question resonates with some fascinating research in mycelial networks and decentralized organization.",
+                "Let me reframe that using analogies from different scientific disciplines to uncover novel approaches."
+            ];
+            
+            return responses[Math.floor(Math.random() * responses.length)];
         }
 
         // Form submission handling
